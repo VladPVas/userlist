@@ -1,42 +1,38 @@
+import { observer } from "mobx-react-lite"
 import React from "react"
-import { store } from "../../../store/store"
-import { addFilter, deleteFilterByName } from "../../../store/slices/users.slice"
-import { useSelector } from "react-redux"
+import Store from "../../states/Store"
 
-const Selecter = () => {
+const Selecter = observer(() => {
 
 	function onChangeHandler(e: React.ChangeEvent<HTMLSelectElement>) {
 		if (e.currentTarget.ariaChecked === 'true') {
-			store.dispatch(addFilter(e.currentTarget.value))
+			// store.dispatch(addFilter(e.currentTarget.value))
+			Store.addFilter(e.currentTarget.value)
 		} else if (e.currentTarget.ariaChecked === 'false') {
-			store.dispatch(deleteFilterByName(e.currentTarget.value))
+			// store.dispatch(deleteFilterByName(e.currentTarget.value))
+			Store.deleteFilter(e.currentTarget.value)
 		}
 	}
 
-	const data = useSelector(state => state)
-	
-	console.log(data)
-
 	return (
 		<form>
-			<input 
-				type="checkbox" 
-				list="names" 
-			/>
 			<select
 				id="names" 
 				multiple 
 				size={4} 
 				onChange={e => onChangeHandler(e)} 
 			>
-				{store.getState().users.data.map(item => {
+				{Store.getUsers.map(item => {
 					return (
-						<option value={item.name} >{item.name}</option>
+						<option value={item.name} >
+							<input type="checkbox"/>
+							{item.name}
+						</option>
 					)
 				})}
 			</select>
 		</form>
 	)
-}
+})
 
 export default Selecter

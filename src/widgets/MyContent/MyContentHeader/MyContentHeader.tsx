@@ -1,27 +1,24 @@
-import React from 'react'
+import { observer } from 'mobx-react-lite'
 import Selecter from '../../../shared/UI/Selecter/Selecter'
-import { store } from '../../../store/store'
-import { useDispatch } from 'react-redux'
-import { clearAllFilters } from '../../../store/slices/users.slice'
+import Store from '../../../shared/states/Store'
 
-const MyContentHeader = () => {
-
-	const dispatch = useDispatch()
+const MyContentHeader = observer(() => {
 
 	function onClickHandler() {
-		dispatch(clearAllFilters())
+		// dispatch(clearAllFilters())
+		Store.clearAll()
 	}
 
 	return (
 		<div>
 			<Selecter />
 			<div>
-				<label>Filter: {store.getState().users.filters.length}</label>
+				<label>Filter: {Store.getFilters.length}</label>
 				<button onClick={onClickHandler}>Clear all</button>
 			</div>
-			<label>Name: {store.getState().users.filters}</label>
+			<label>Name: {Store.getFilters}</label>
 		</div>
 	)
-}
+})
 
 export default MyContentHeader

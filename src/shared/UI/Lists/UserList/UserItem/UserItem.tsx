@@ -12,7 +12,7 @@ interface UserItemProps {
 
 const UserItem: React.FC<UserItemProps> = ({image, user}) => {
 
-	const {address, company, email, id, name, phone, username, website} = user
+	const { email, name, phone, username, website} = user
 
 	return (
 		<div>
